@@ -2,6 +2,7 @@
 ---
 In this project, I built an Active Directory home lab using Windows Server 2022 and VirtualBox. The goal was to learn how to install Active Directory Domain Services (AD DS), promote a Windows Server to a domain controller, create a new Active Directory forest, and manage organizational units and user accounts.
 
+[Video Demonstration Coming Soon](https://www.youtube.com/@jordanstantoncyber)
 ---
 When the virtual machine starts, Server Manager opens automatically. Server Manager is a Windows Server tool used to install, configure, and manage server roles and features.
 <img width="866" height="644" alt="image" src="https://github.com/user-attachments/assets/b3d7ec2c-6248-49d5-8df8-2af6f5d343a1" />
