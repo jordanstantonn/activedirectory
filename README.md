@@ -141,7 +141,9 @@ For this project, the following OUs were created:
 
 - **IT**
 - **Finance**
-<img width="859" height="646" alt="image" src="https://github.com/user-attachments/assets/ce0190ff-d19a-4109-be4e-f387b78730c9" />
+- **HR**
+<img width="162" height="342" alt="image" src="https://github.com/user-attachments/assets/01c72f4c-890a-455e-84eb-aedba30e6e32" />
+
 
 ---
 
@@ -174,12 +176,22 @@ Users were successfully created inside their respective OUs:
 - **IT Department**
   - Daniel
   - Caylee
-<img width="855" height="647" alt="image" src="https://github.com/user-attachments/assets/1e068b66-597a-43cc-855b-a6b11da6f419" />
+  - Grobert
+<img width="857" height="645" alt="image" src="https://github.com/user-attachments/assets/e58ba506-7d7f-431f-9cfc-0ed45b5a3133" />
+
 
 - **Finance Department**
   - Harlin
   - Huy
-<img width="855" height="645" alt="image" src="https://github.com/user-attachments/assets/d2d74e81-d8a0-4701-8c5f-b43209fdfe87" />
+  - Caelyn
+  <img width="861" height="651" alt="image" src="https://github.com/user-attachments/assets/41b58c1c-6f5a-481b-b255-d448f3348e28" />
+
+
+- **HR Department**
+  - Jamelah
+  - Johnny
+  - Jordan
+  <img width="864" height="649" alt="image" src="https://github.com/user-attachments/assets/0af03e78-2ee3-42a0-97d9-c1ad216e1ee9" />
 
 ---
 
