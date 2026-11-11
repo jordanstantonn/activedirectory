@@ -1,3 +1,6 @@
+<img width="566" height="313" alt="image" src="https://github.com/user-attachments/assets/ac6798c8-7a00-4559-a5a9-a168c90a4e46" />
+
+
 <h1>On-Premises Active Directory Deployed in the Cloud (Azure)</h1>
 This tutorial outlines the implementation of on-premises Active Directory within two Azure virtual machines.<br/>
 
