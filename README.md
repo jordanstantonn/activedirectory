@@ -1,198 +1,128 @@
-# Active Directory Home Lab (Windows 2022)
----
-In this project, I built an Active Directory home lab using Windows Server 2022 and VirtualBox. The goal was to learn how to install Active Directory Domain Services (AD DS), promote a Windows Server to a domain controller, create a new Active Directory forest, and manage organizational units and user accounts.
+Install Active Directory
+---------------------------------
 
+To begin, log into DC-1 and open Server Manager. Select "Add Roles and Features" from the dashboard.
 
----
-When the virtual machine starts, Server Manager opens automatically. Server Manager is a Windows Server tool used to install, configure, and manage server roles and features.
-<img width="866" height="644" alt="image" src="https://github.com/user-attachments/assets/b3d7ec2c-6248-49d5-8df8-2af6f5d343a1" />
+<img width="1277" height="657" alt="image" src="https://github.com/user-attachments/assets/70e196f9-7aa1-4e31-a63c-2848b6b71562" />
 
+Select "Active Directory Domain Services (AD DS)" under Server Roles and continue through the installation wizard
 
----
+<img width="820" height="579" alt="image" src="https://github.com/user-attachments/assets/2d46112b-056e-4ca8-96ca-0abd9d5c3b66" />
 
-## 1. Renaming the Server
+Continue through the installation wizard. Under Confirmation, select Install to begin installing Active Directory Domain Services.
 
-First, open the **Local Server** tab in Server Manager and rename the computer to make it easier to identify within the environment.
+<img width="619" height="442" alt="image" src="https://github.com/user-attachments/assets/56ade1ab-a53a-4cef-a59c-22167c7645ba" />  <img width="637" height="460" alt="image" src="https://github.com/user-attachments/assets/7c99f54c-ed81-48fc-9473-8bcfe7429d30" />
 
-For this lab, the server was named:
+After installing Active Directory Domain Services, return to Server Manager and select "Promote this server to a Domain Controller" from the notifications menu.
 
-- **ADLAB**
-<img width="864" height="645" alt="image" src="https://github.com/user-attachments/assets/f039a558-62c2-453d-a2d2-696c50268673" />
+<img width="627" height="413" alt="image" src="https://github.com/user-attachments/assets/45c1196d-ef54-48c3-94e3-fa371c23e0b5" />
 
-After changing the computer name, Windows prompts for a restart to apply the change.
+In the Configuration Wizard, select "Add a new forest" and enter "mydomain.com" as the root domain name
 
-Once the server restarts, Server Manager opens automatically again, and the new computer name is displayed, confirming the change was successful.
-<img width="858" height="647" alt="image" src="https://github.com/user-attachments/assets/3cd12bd3-1246-48fa-a9dd-02c0b82f9a18" />
+<img width="620" height="456" alt="image" src="https://github.com/user-attachments/assets/e89114cb-8027-48af-b6c1-9edb66038d40" />
 
----
+Configure the Directory Services Restore Mode (DSRM) password and continue through the
+wizard. Leave DNS delegation unchecked and verify the NetBIOS name.
 
-## 2. Configuring a Static IP Address
+<img width="622" height="466" alt="image" src="https://github.com/user-attachments/assets/2cf88da2-87a2-4f1e-a56b-3d3bd512ebb3" />
 
-Next, configure a static IP address for the server.
+Continue through the remaining configuration screens. Once the prerequisite checks are complete, select Install.
 
-A domain controller (Active Directory server) needs a consistent IP address so it can always be found on the network. If DHCP were used and the IP changed, devices could lose connectivity and critical services like Active Directory and DNS could stop working.
+<img width="622" height="458" alt="image" src="https://github.com/user-attachments/assets/d87acad3-d0e0-420b-bc40-1162333c76fa" />
 
-### Network Settings:
+After installation, DC-1 will restart to complete the Domain Controller promotion. Log back in using the domain credentials.
 
-Go to:
+<img width="409" height="446" alt="image" src="https://github.com/user-attachments/assets/81a99941-46e4-4f65-8e82-5720d3b5e4e1" />
 
-**Network Connections → Ethernet → Properties → Internet Protocol Version 4 (TCP/IPv4)**
 
-Enter the following configuration:
 
-- **IP Address:** 192.168.1.10  
-- **Subnet Mask:** 255.255.255.0  
-- **Default Gateway:** 192.168.1.1  
-- **Preferred DNS:** 8.8.8.8  
-- **Alternate DNS:** 8.8.4.4  
-<img width="861" height="646" alt="image" src="https://github.com/user-attachments/assets/12ea045e-0312-49c4-92ac-b8f1ef27a30d" />
 
-### Explanation:
+Open Active Directory Users and Computers (ADUC) on DC-1. Right-click the mydomain.com domain, select New, and create two Organizational Units (OUs) named "_EMPLOYEES" and "_ADMINS."
 
-- The IP address is set manually so the server remains reachable at a consistent address.
-- The subnet mask defines the local network range.
-- The default gateway allows communication outside the local network.
-- DNS servers resolve domain names into IP addresses.
+<img width="415" height="354" alt="image" src="https://github.com/user-attachments/assets/a2145ac3-ebe8-4b48-ab0b-3eb6fddfd575" /> <img width="433" height="372" alt="image" src="https://github.com/user-attachments/assets/20f5a070-c9c9-4493-9011-2f7694343ce1" />
 
----
+Inside the _ADMINS OU, create a new user named Jane Doe with the username "jane_admin"
 
-## 3. Installing Active Directory Domain Services (AD DS)
+<img width="443" height="366" alt="image" src="https://github.com/user-attachments/assets/840cf013-ca4a-43d8-b218-e3eeca3c9967" />
+<img width="434" height="371" alt="image" src="https://github.com/user-attachments/assets/7ee8e854-811c-4403-ba83-80f2973d64ab" />
 
-Next, install **Active Directory Domain Services (AD DS)**.
 
-From the Server Manager dashboard:
 
-1. Click **Add Roles and Features**
-2. Click **Next** through the wizard until reaching **Server Roles**
-3. Select **Active Directory Domain Services**
-4. Click **Add Features** when prompted
-5. Continue clicking **Next** through the wizard
-6. On the **Confirmation** page, check:
-   - Restart the destination server automatically if required
-7. Click **Install**
-<img width="865" height="645" alt="image" src="https://github.com/user-attachments/assets/7a7ba6b1-8409-4993-ba5d-8e9f8a11be73" />
+After creating the account, open its Properties and navigate to the "Member Of" tab. Select Add and add the account to the Domain Admins security group.
 
-This installs Active Directory, which is required to promote the server to a domain controller and manage users, computers, and network resources centrally.
+Log out of DC-1 and log back in using the new administrative account: mydomain.com\jane_admin.
 
----
+Verify the account by running whoami in Command Prompt.
 
-## 4. Promoting the Server to a Domain Controller
+<img width="614" height="412" alt="image" src="https://github.com/user-attachments/assets/48602930-d521-444d-bbfc-89a05e1743ba" />
 
-After installation completes, return to the Server Manager dashboard.
+When prompted, enter the domain administrator credentials to authorize the domain join.
 
-Click the notification flag and select:
+<img width="387" height="314" alt="image" src="https://github.com/user-attachments/assets/305fb945-11eb-4c7a-979a-6183ad9db4ed" />
 
-- **Promote this server to a domain controller**
-<img width="859" height="652" alt="image" src="https://github.com/user-attachments/assets/92f0cb15-5505-415b-a82f-0b842b4a38d7" />
 
----
+Log into Client-1 using the original local administrator account, labuser. Open System Settings and navigate to the computer name and domain settings. Select Change, choose Domain, and enter mydomain.com.
 
-## 5. Creating a New Forest
+<img width="448" height="442" alt="image" src="https://github.com/user-attachments/assets/1c6f5728-9f01-4494-a2f6-f95ed93dc591" />
 
-Select:
+Once the confirmation message appears, restart Client-1.
 
-- **Add a new forest**
+<img width="300" height="151" alt="image" src="https://github.com/user-attachments/assets/ec926375-12ea-4ddc-86a5-7686b9a8f915" />
 
-Set the root domain name.
+On DC-1, open Active Directory Users and Computers and verify that Client-1 appears in the Computers container.
 
-For this lab example:
+Create a new Organizational Unit named _CLIENTS and move Client-1 into it.
 
-- **stantonindustries.local**
-<img width="859" height="644" alt="image" src="https://github.com/user-attachments/assets/56015533-f59c-476b-9393-bd6e2dbc2ddd" />
+<img width="621" height="429" alt="image" src="https://github.com/user-attachments/assets/f9186ddb-7135-4258-8b72-c700ddd6b0f0" />
 
-Click **Next** and create a Directory Services Restore Mode (DSRM) password when prompted.
-<img width="861" height="643" alt="image" src="https://github.com/user-attachments/assets/6b1aea22-4f70-4271-8774-1e88373e1309" />
 
-Continue clicking **Next** through the wizard.
+Finally, log into Client-1 using the domain administrator account to verify successful domain
+authentication.
 
-On the **Prerequisites Check** page, verify that all requirements are met.
+<img width="465" height="510" alt="image" src="https://github.com/user-attachments/assets/d0421186-03f7-4373-9a10-6221e37bfc2d" />
 
-Click **Install** to proceed.
-<img width="862" height="652" alt="image" src="https://github.com/user-attachments/assets/a171b5c1-3118-45f4-86fa-f0887c64b639" />
+Log into Client-1 using the domain administrator account, mydomain.com\jane_admin.
 
-The system will automatically restart and sign out after installation completes.
+Open System Settings and navigate to Remote Desktop.
 
----
+<img width="620" height="471" alt="image" src="https://github.com/user-attachments/assets/38a59ccb-e53c-4d5a-b449-c0f02890a587" />
 
-## 6. Accessing Active Directory Users and Computers
+Select Remote Desktop Users and click Add
 
-After the restart:
+<img width="376" height="333" alt="image" src="https://github.com/user-attachments/assets/18b629f9-ae4b-4813-a4f0-c260ae5d7648" />
 
-1. Open **Server Manager**
-2. Go to **Tools**
-3. Select **Active Directory Users and Computers**
+Enter Domain Users and confirm the selection
 
-You should now see the domain listed and active.
-<img width="858" height="647" alt="image" src="https://github.com/user-attachments/assets/327f97bb-d634-4172-b387-9589dae6bce7" />
+<img width="463" height="274" alt="image" src="https://github.com/user-attachments/assets/79a9752c-4da9-45fb-bd1d-aaa47c5b589b" />
 
----
+Domain Users have now been added to the Remote Desktop Users group, allowing standard domain accounts to remotely access Client-1, subject to the computer's other access and security settings.
 
-## 7. Creating Organizational Units (OUs)
 
-Next, create Organizational Units (OUs) to structure the directory.
+This step uses a PowerShell script (https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1) to automate the creation of additional Active Directory user accounts. 
 
-Steps:
+On DC-1, open PowerShell ISE as an administrator.
 
-1. Right-click the domain
-2. Select **New → Organizational Unit**
-3. Name the OU based on your structure
+<img width="624" height="314" alt="image" src="https://github.com/user-attachments/assets/38ff07cc-4108-485e-b174-bfa85910ce0e" />
 
-For this project, the following OUs were created:
+Create a new script, paste the provided User-Generator PowerShell script, and save the file.
 
-- **IT**
-- **Finance**
-- **HR**
-<img width="162" height="342" alt="image" src="https://github.com/user-attachments/assets/01c72f4c-890a-455e-84eb-aedba30e6e32" />
+<img width="621" height="252" alt="image" src="https://github.com/user-attachments/assets/aac1e7ba-368f-4cbe-a142-ea9389f13e0e" />
 
+Run the script and observe the additional user accounts being generated
 
----
+<img width="622" height="308" alt="image" src="https://github.com/user-attachments/assets/2e74ab83-166b-4f60-b81e-0f3c3181d65c" />
 
-## 8. Creating User Accounts
+Once the script finishes, open Active Directory Users and Computers and verify that the new accounts appear inside the _EMPLOYEES OU.
 
-Inside each Organizational Unit (OU), user accounts can be created.
 
-Steps:
+<img width="630" height="430" alt="image" src="https://github.com/user-attachments/assets/21c61330-7af6-46ea-b6f4-87e00da95b7e" />
 
-1. Right-click the desired OU
-2. Select **New → User**
-3. Enter user details:
-   - First name
-   - Last name
-   - Full name
-   - User logon name
-4. Create a password for the account
-5. Configure account options as needed:
-   - Require password change at next logon
-   - User cannot change password
-   - Password never expires
-   - Disable account
 
----
+Finally, use Remote Desktop Connection to access Client-1 with one of the newly created standard domain user accounts. Use the domain-qualified username format: mydomain.com\username
 
-## 9. Final Result
+<img width="434" height="187" alt="image" src="https://github.com/user-attachments/assets/1e4ae886-6f90-4a57-a09d-03ddc33a8d92" />
 
-Users were successfully created inside their respective OUs:
+Verify that the account successfully logs into Client-1.
 
-- **IT Department**
-  - Daniel
-  - Caylee
-  - Grobert
-<img width="857" height="645" alt="image" src="https://github.com/user-attachments/assets/e58ba506-7d7f-431f-9cfc-0ed45b5a3133" />
+<img width="620" height="343" alt="image" src="https://github.com/user-attachments/assets/67b70168-4e3c-4d17-b5c5-eb77732d5a9d" />
 
-
-- **Finance Department**
-  - Harlin
-  - Huy
-  - Caelyn
-  <img width="861" height="651" alt="image" src="https://github.com/user-attachments/assets/41b58c1c-6f5a-481b-b255-d448f3348e28" />
-
-
-- **HR Department**
-  - Jamelah
-  - Johnny
-  - Jordan
-  <img width="864" height="649" alt="image" src="https://github.com/user-attachments/assets/0af03e78-2ee3-42a0-97d9-c1ad216e1ee9" />
-
----
-
-This completes the installation of Active Directory Domain Services (AD DS), the promotion of the server to a domain controller, the creation of organizational units (OUs), the creation of users and groups, and the verification that Active Directory is working properly.
