@@ -1,5 +1,23 @@
-Install Active Directory
----------------------------------
+<h1>On-Premises Active Directory Deployed in the Cloud (Azure)</h1>
+This tutorial outlines the implementation of on-premises Active Directory within two Azure virtual machines.<br/>
+
+
+<h2>Environments and Technologies Used</h2>
+
+- Microsoft Azure (Virtual Machines/Compute)
+- Remote Desktop
+- Active Directory Domain Services
+- PowerShell
+
+<h2>Operating Systems Used </h2>
+
+- Windows Server 2022
+- Windows 11 (21H2)
+- Windows 11 Home (Host Machine)
+
+
+
+<h2>Deployment and Configuration Processs</h2
 
 To begin, log into DC-1 and open Server Manager. Select "Add Roles and Features" from the dashboard.
 
